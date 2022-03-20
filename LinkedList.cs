@@ -1,21 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace List_in_cSharp
 {
-    class LinkedList
+    internal class LinkedList<T> : List<T>
     {
-        private Node head;
-        private Node tail;
+        private Node<T> head;
+        private Node<T> tail;
         private int size;
 
-        public void addAtTail(string data)
+        public void addAtFront(T data)
         {
-            Node node = new Node(data);
+            Node<T> node = new Node<T>(data);
 
             if (size == 0)
+            {
+                tail = node;
+            }
+            else
+            {
+                head.previous = node;
+            }
+            node.next = head;
+            head = node;
+
+            size++;
+        }
+
+        public void addAtTail(T data)
+        {
+            Node<T> node = new Node<T>(data);
+
+            //node.data=data;
+
+            if (size == 0)
+            {
                 head = node;
+            }
             else
             {
                 tail.next = node;
@@ -26,27 +50,14 @@ namespace List_in_cSharp
             size++;
         }
 
-        public void addAtFront(string data)
-        {
-            Node node = new Node(data);
-
-            if (size == 0)
-                tail = node;
-            else
-                head.previous = node;
-
-            node.next = head;
-            head = node;
-
-            size++;
-        }
-
         public void remove(int index)
         {
-            Node node = findNode(index);
+            Node<T> node = findNode(index);
 
             if (node == null)
+            {
                 return;
+            }
 
             if (size == 1)
             {
@@ -57,13 +68,17 @@ namespace List_in_cSharp
             {
                 head = node.next;
                 if (head != null)
+                {
                     head.previous = null;
+                }
             }
             else if (node == tail)
             {
                 tail = node.previous;
                 if (tail != null)
+                {
                     tail.next = null;
+                }
             }
             else
             {
@@ -73,59 +88,14 @@ namespace List_in_cSharp
             size--;
         }
 
-        public void removeAll()
+        private Node<T> findNode(int index)
         {
-            head = null;
-            tail = null;
-            size = 0;
-        }
-
-        public void setAt(int index, string data)
-        {
-            Node node = findNode(index);
-
-            if (node != null)
-                node.data = data;
-        }
-
-        public string getAt(int index)
-        {
-            Node node = findNode(index);
-
-            return node == null ? null : node.data;
-        }
-
-        public LinkedListIterator getIterator()
-        {
-            return new LinkedListIterator(head);
-        }
-
-        public void removeAllWithValue(String data)
-        {
-            int currentIndex = 0;
-            LinkedListIterator iterator = getIterator();
-            while (iterator.hasNext())
-            {
-                if (data.Equals(getAt(currentIndex)))
-                {
-                    remove(currentIndex);
-                    currentIndex++;
-                }
-            }
-        }
-
-        public int getSize()
-        {
-            return size;
-        }
-
-        private Node findNode(int index)
-        {
-
             if (index < 0 || index >= size)
+            {
                 return null;
+            }
 
-            Node node = head;
+            Node<T> node = head;
             int currentIndex = 0;
 
             while (currentIndex != index)
@@ -135,6 +105,59 @@ namespace List_in_cSharp
             }
 
             return node;
+        }
+
+        public void removeAll()
+        {
+            head = null;
+            tail = null;
+            size = 0;
+        }
+
+        public void PrintList()
+        {
+            Node<T> runner = head;
+            while (runner != null)
+            {
+                Console.WriteLine(runner.data);
+                runner = runner.next;
+            }
+        }
+
+        public int getSize()
+        {
+            return size;
+        }
+
+        public T getAt(int index)
+        {
+            Node<T> node = findNode(index);
+
+            if (node == null)
+            {
+                return default(T);
+            }
+            else
+            {
+                return node.data;
+            }
+
+        }
+
+        public void setAt(int index, T data)
+        {
+            Node<T> node = findNode(index);
+
+            if (node != null)
+            {
+                node.data = data;
+            }
+        }
+
+        public Iterator<T> getIterator()
+        {
+            //return  null;
+            return new LinkedListIterator<T>(head);
         }
     }
 }

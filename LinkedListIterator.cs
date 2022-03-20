@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace List_in_cSharp
 {
-    class LinkedListIterator
+    internal class LinkedListIterator<T> : Iterator<T>
     {
-        private Node currentNode;
+        private Node<T> currentNode;
 
-        public LinkedListIterator(Node startNode)
+        internal LinkedListIterator(Node<T> startNode)
         {
             currentNode = startNode;
         }
@@ -18,13 +20,14 @@ namespace List_in_cSharp
             return currentNode != null;
         }
 
-        public string next()
+        public T next()
         {
-            string data = currentNode.data;
+            T data = currentNode.data;
 
             currentNode = currentNode.next;
 
             return data;
+            //return currentNode.data;
         }
     }
 }

@@ -1,31 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace List_in_cSharp
 {
-    class ArrayListIterator
+    internal class ArrayListIterator<T> : Iterator<T>
     {
-        private ArrayList arrayList;
+        private ArrayList<T> arrayList;
         private int currentItem;
 
-        public ArrayListIterator(ArrayList arrayList)
+        public ArrayListIterator(ArrayList<T> arrayList)
         {
             this.arrayList = arrayList;
         }
+
 
         public bool hasNext()
         {
             return currentItem < arrayList.getSize();
         }
 
-        public String next()
+        public T next()
         {
-            String data = arrayList.getAt(currentItem);
-
+            T data = arrayList.getAt(currentItem);
             currentItem++;
-
             return data;
         }
     }
 }
+

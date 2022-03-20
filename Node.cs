@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace List_in_cSharp
 {
-    class Node
+    internal class Node<T>
     {
-        internal string data;
-        internal Node next;
-        internal Node previous;
+        internal T data;
+        internal Node<T> next;
+        internal Node<T> previous;
 
-        public Node(string data)
+        internal Node(T data)
         {
             this.data = data;
         }

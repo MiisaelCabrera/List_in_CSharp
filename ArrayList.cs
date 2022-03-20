@@ -1,88 +1,101 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace List_in_cSharp
 {
-    class ArrayList
+    internal class ArrayList<T> : List<T>
     {
-        private static readonly int DEFAULT_SIZE = 2;
-        private String[] array;
+        private const int tam = 10;
+        private T[] array;
         private int size;
 
-        public static String getName()
+        public ArrayList(int size)
         {
-            return "ArrayList";
+            array = (T[])new T[size];
         }
 
         public ArrayList()
         {
-            array = new String[DEFAULT_SIZE];
+            array = (T[])new T[tam];
         }
 
-        public ArrayList(int size)
+        public void addAtTail(T data)
         {
-            array = new String[size];
-        }
-
-        public void addAtTail(String data)
-        {
-
             if (size == array.Length)
-                increaseArraySize();
+            {
+                increaseArrayList();
+            }
 
             array[size] = data;
             size++;
         }
 
-        public void addAtFront(String data)
+        private void increaseArrayList()
         {
+            T[] newArray = (T[])new T[array.Length * 2];
 
+            for (int i = 0; i < size; i++)
+            {
+                newArray[i] = array[i];
+            }
+
+            array = newArray;
+        }
+
+        public void addAtFront(T data)
+        {
             if (size == array.Length)
-                increaseArraySize();
+            {
+                increaseArrayList();
+            }
 
-            if (size >= 0)
-                Array.Copy(array, 0, array, 1, size);
-
+            if (size >= 0) Array.Copy(array, 0, array, 1, size);
             array[0] = data;
             size++;
         }
 
         public void remove(int index)
         {
-
             if (index < 0 || index >= size)
+            {
                 return;
+            }
 
-            if (size - 1 - index >= 0)
-                Array.Copy(array, index + 1, array, index, size - 1 - index);
-
-            array[size - 1] = null;
+            if (size - 1 - index >= 0) Array.Copy(array, index + 1, array, index, size - 1 - index);
+            array[size - 1] = default(T);
             size--;
         }
 
         public void removeAll()
         {
             for (int i = 0; i < size; i++)
-                array[i] = null;
-
+            {
+                array[i] = default(T);
+            }
             size = 0;
         }
 
-        public void setAt(int index, String data)
+        public T getAt(int index)
         {
             if (index >= 0 && index < size)
+            {
+                return array[index];
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+        public void setAt(int index, T data)
+        {
+            if (index >= 0 && index < size)
+            {
                 array[index] = data;
-        }
-
-        public String getAt(int index)
-        {
-            return index >= 0 && index < size ? array[index] : null;
-        }
-
-        public ArrayListIterator getIterator()
-        {
-            return new ArrayListIterator(this);
+            }
         }
 
         public int getSize()
@@ -90,14 +103,17 @@ namespace List_in_cSharp
             return size;
         }
 
-        private void increaseArraySize()
+        public void PrintArray()
         {
-            String[] newArray = new String[array.Length * 2];
-
             for (int i = 0; i < size; i++)
-                newArray[i] = array[i];
+            {
+                Console.WriteLine(array[i]);
+            }
+        }
 
-            array = newArray;
+        public Iterator<T> getIterator()
+        {
+            return new ArrayListIterator<T>(this);
         }
     }
 }

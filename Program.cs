@@ -10,15 +10,19 @@ namespace List_in_cSharp
     {
         static void Main(string[] args)
         {
-            
-            ArrayList team1 = new ArrayList();
-            ArrayList team2 = new ArrayList();
-            ArrayList team3 = new ArrayList();
+            List<string> team1 = new LinkedList<string>();
+            List<string> team2 = new LinkedList<string>();
+            List<string> team3 = new LinkedList<string>();
+            List<string> team4 = new ArrayList<string>();
+            List<string> team5 = new ArrayList<string>();
+            List<string> team6 = new ArrayList<string>();
+            funcs(team1, team2, team3, 0);
+            funcs(team4, team5, team6, 1);
+        }
 
-            /*LinkedList team1 = new LinkedList();
-            LinkedList team2 = new LinkedList();
-            LinkedList team3 = new LinkedList();*/
-
+        static void funcs(List<string> team1, List<string> team2, List<string> team3, int controller)
+        {
+            controller *= 3;
             team1.addAtTail("Jesús");
             team1.addAtTail("Salomón");
             team1.addAtTail("Yael");
@@ -28,8 +32,8 @@ namespace List_in_cSharp
             team2.addAtFront("Diego");
             team3.addAtFront("Imelda");
 
-            //LinkedListIterator iterator;
-            ArrayListIterator iterator;
+            Iterator<string> iterator;
+
             iterator = team1.getIterator();
 
             while (iterator.hasNext())
@@ -58,7 +62,8 @@ namespace List_in_cSharp
 
             team1.remove(0);
             team1.addAtFront("Rebeca");
-            Console.WriteLine("Team 1 tiene: " + team1.getSize() + " integrantes"); // debe imprimir "Team 1 tiene 3 integrantes"
+            controller ++;
+            Console.WriteLine("Team " + controller + " tiene: " + team1.getSize() + " integrantes"); // debe imprimir "Team 1 tiene 3 integrantes"
 
             iterator = team1.getIterator();
 
@@ -75,7 +80,8 @@ namespace List_in_cSharp
 
             team2.remove(2);
             team2.addAtTail("Rita");
-            Console.WriteLine("Team 2 tiene: " + team2.getSize() + " integrantes"); // debe imprimir "Team 2 tiene 3 integrantes"
+            controller++;
+            Console.WriteLine("Team "+controller+" tiene: " + team2.getSize() + " integrantes"); // debe imprimir "Team 2 tiene 3 integrantes"
 
             iterator = team2.getIterator();
 
@@ -96,7 +102,8 @@ namespace List_in_cSharp
             team3.addAtTail("Tadeo");
             team3.addAtFront("Isai");
 
-            Console.WriteLine("Team 3 tiene: " + team3.getSize() + " integrantes"); // debe imprimir "Team 3 tiene 2 integrantes"
+            controller++;
+            Console.WriteLine("Team "+controller+" tiene: " + team3.getSize() + " integrantes"); // debe imprimir "Team 3 tiene 2 integrantes"
 
             iterator = team3.getIterator();
 
@@ -112,8 +119,8 @@ namespace List_in_cSharp
 
             if (team1.getAt(1).Equals("Salomón"))
                 team1.setAt(1, "Luis");
-
-            Console.WriteLine("Team 1 tiene: " + team1.getSize() + " integrantes"); // debe imprimir "Team 1 tiene 3 integrantes"
+            controller -= 2;
+            Console.WriteLine("Team "+controller+" tiene: " + team1.getSize() + " integrantes"); // debe imprimir "Team 1 tiene 3 integrantes"
 
             iterator = team1.getIterator();
 
@@ -122,12 +129,14 @@ namespace List_in_cSharp
                 string name = iterator.next();
                 Console.WriteLine(name);
             }
+            Console.WriteLine();
+            Console.WriteLine();
 
             // Debió haber impreso
             // Rebeca
             // Luis
             // Yael
-             
+
         }
     }
 }
